@@ -1,4 +1,7 @@
 # OCI runtime-spec
+
+Linux における runtime-spec の要約である．
+
 ## The 5 principles of Standard Containers
 ### 1. Standard operations
 Standard Containers は一連の Standard Operations を定義している．
@@ -36,3 +39,16 @@ Standard Container bundle はコンテナをロードして実行するために
 
 これらはローカルのファイルシステムのひとつのディレクトリに存在**しなければならず**，そのディレクトリは bundle には含まれない．
 つまり bundle の tar archive はこれらの artifacts を archive のルートにもつはずである．
+
+## Runtime and Lifecycle
+### State
+* `ociVersion`(string, REQUIRED): 準拠する OCI Runtime Specification のバージョン
+* `id`(string, REQUIRED): コンテナの ID． あるホストのすべてのコンテナの間で一意**でなければならない**が，ホスト間で一意である必要はない
+* `status(string, REQUIRED): コンテナランタイムの状態．
+  * `creating`: コンテナは作成中である
+  * `created`: コンテナの作成は完了している
+  * `running`: コンテナがユーザ指定のプログラムによって起動されたが，停止されていない
+  * `stopped`: コンテナは停止された
+* `pid`(int, REQUIRED): コンテナのプロセスの ID
+* `bundle`(string, REQUIRED): コンテナの bundle のディレクトリの絶対パス
+* `annotations`(map, OPTIONAL): コンテナに関するアノテーション
